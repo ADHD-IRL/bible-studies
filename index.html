@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 {% assign total = site.studies | size %}
-{% assign recent = site.studies | where_exp: "s", "s.date" | sort: "date" | reverse %}
+{% assign _ts = site.time | date: "%s" %}{% assign recent = "" | split: "" %}{% assign bydate = site.studies | sort: "date" | reverse %}{% for s in bydate %}{% assign _ds = s.date | date: "%s" %}{% if _ds != _ts %}{% assign recent = recent | push: s %}{% endif %}{% endfor %}
 {% assign types = site.studies | group_by: "type" | sort: "name" %}
 {% capture all_books %}{% for s in site.studies %}{% for b in s.books %}{{ b }}|{% endfor %}{% endfor %}{% endcapture %}
 {% assign book_count = all_books | split: "|" | uniq | size %}

@@ -10,7 +10,7 @@ layout: default
       <h1>{{ page.title }}</h1>
       {% if page.summary %}<p class="lede">{{ page.summary }}</p>{% endif %}
       <div class="study-facts">
-        {% if page.date %}<span>{{ page.date | date: "%B %-d, %Y" }}</span>{% endif %}
+        {% assign _ts = site.time | date: "%s" %}{% assign _ds = page.date | date: "%s" %}{% if _ds != _ts %}<span>{{ page.date | date: "%B %-d, %Y" }}</span>{% endif %}
         {% if page.testament %}<span>{% if page.testament == "Both" %}Old and New Testament{% else %}{{ page.testament }} Testament{% endif %}</span>{% endif %}
         <span>{{ content | number_of_words | divided_by: 220 | plus: 1 }} min read</span>
       </div>

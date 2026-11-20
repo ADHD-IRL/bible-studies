@@ -32,8 +32,8 @@ permalink: /studies/
   </div>
   <p class="count" id="count"></p>
   <div class="cards" id="library">
-    {% for s in all %}
-    <div class="card-wrap" data-title="{{ s.title | downcase | escape }}" data-date="{{ s.date | date: '%Y%m%d' | default: '0' }}" data-type="{{ s.type }}" data-testament="{{ s.testament }}">
+    {% for s in all %}{% assign _ds = s.date | date: "%s" %}{% assign _ts = site.time | date: "%s" %}
+    <div class="card-wrap" data-title="{{ s.title | downcase | escape }}" data-date="{% if _ds != _ts %}{{ s.date | date: '%Y%m%d' }}{% else %}0{% endif %}" data-type="{{ s.type }}" data-testament="{{ s.testament }}">
       {% include study-card.html study=s %}
     </div>
     {% endfor %}
