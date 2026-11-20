@@ -1,0 +1,41 @@
+---
+layout: default
+title: Library
+permalink: /studies/
+---
+{% assign all = site.studies | sort: "title" %}
+{% assign types = site.studies | group_by: "type" | sort: "name" %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>The library</h1>
+    <p>Every study, A to Z. Filter by kind or testament.</p>
+  </div>
+</section>
+<section class="wrap">
+  <div class="filters" id="filters">
+    <div class="chips" role="group" aria-label="Kind of study">
+      <button class="chip is-on" data-filter-type="">All</button>
+      {% for g in types %}<button class="chip" data-filter-type="{{ g.name }}">{{ g.name }}</button>{% endfor %}
+    </div>
+    <div class="chips" role="group" aria-label="Testament">
+      <button class="chip is-on" data-filter-testament="">Any testament</button>
+      <button class="chip" data-filter-testament="Old">Old</button>
+      <button class="chip" data-filter-testament="New">New</button>
+      <button class="chip" data-filter-testament="Both">Both</button>
+    </div>
+    <label class="sort">Sort
+      <select id="sort">
+        <option value="title">A to Z</option>
+        <option value="new">Newest first</option>
+      </select>
+    </label>
+  </div>
+  <p class="count" id="count"></p>
+  <div class="cards" id="library">
+    {% for s in all %}
+    <div class="card-wrap" data-title="{{ s.title | downcase | escape }}" data-date="{{ s.date | date: '%Y%m%d' | default: '0' }}" data-type="{{ s.type }}" data-testament="{{ s.testament }}">
+      {% include study-card.html study=s %}
+    </div>
+    {% endfor %}
+  </div>
+</section>

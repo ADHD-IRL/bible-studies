@@ -1,0 +1,17 @@
+---
+layout: default
+title: Search
+permalink: /search/
+---
+<section class="page-head">
+  <div class="wrap">
+    <h1>Search the studies</h1>
+    <p>Try a reference like <em>John 3:16</em>, a book like <em>Daniel</em>, or a word like <em>grace</em>.</p>
+    <input class="big-search" id="search-input" type="search" placeholder="Search" aria-label="Search studies" autocomplete="off">
+  </div>
+</section>
+<section class="wrap">
+  <p class="count" id="search-count" aria-live="polite"></p>
+  <div class="results" id="search-results"></div>
+</section>
+<script>window.SEARCH_INDEX = "{{ '/search.json' | relative_url }}";</script>

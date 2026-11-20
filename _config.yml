@@ -1,0 +1,31 @@
+title: "Bible Studies"
+tagline: "A growing library of verse studies, topical studies and group lessons"
+description: "Mark's Bible studies, organized by book and topic, with search."
+baseurl: "/bible-studies"
+url: ""
+markdown: kramdown
+kramdown:
+  input: GFM
+  auto_ids: true
+permalink: pretty
+
+collections:
+  studies:
+    output: true
+    permalink: /studies/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: studies
+    values:
+      layout: study
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - _templates
+  - _reports
+  - vendor
+  - .bundle

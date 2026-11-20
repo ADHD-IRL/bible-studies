@@ -1,0 +1,34 @@
+---
+layout: default
+title: Books
+permalink: /books/
+---
+<section class="page-head">
+  <div class="wrap">
+    <h1>Browse by book</h1>
+    <p>Studies grouped by the books of the Bible they draw on, in canonical order.</p>
+  </div>
+</section>
+{% assign testaments = "Old,New" | split: "," %}
+{% for t in testaments %}
+<section class="wrap book-section">
+  <h2 class="section-h" id="{% if t == 'Old' %}old-testament{% else %}new-testament{% endif %}">{{ t }} Testament</h2>
+  <div class="book-index">
+    {% for b in site.data.books %}{% if b.testament == t %}
+      {% assign n = 0 %}{% for s in site.studies %}{% if s.books contains b.name %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}
+      {% if n > 0 %}<a class="book-chip" href="#{{ b.name | slugify }}">{{ b.name }} <span>{{ n }}</span></a>{% else %}<span class="book-chip is-empty">{{ b.name }}</span>{% endif %}
+    {% endif %}{% endfor %}
+  </div>
+  {% for b in site.data.books %}{% if b.testament == t %}
+    {% assign list = site.studies | where_exp: "s", "s.books contains b.name" | sort: "title" %}
+    {% if list.size > 0 %}
+    <div class="group" id="{{ b.name | slugify }}">
+      <h3 class="group-h">{{ b.name }} <span>{{ list.size }}</span></h3>
+      <ul class="list">
+        {% for s in list %}<li><a href="{{ s.url | relative_url }}">{{ s.title }}</a><small>{{ s.type }}</small></li>{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endif %}{% endfor %}
+</section>
+{% endfor %}

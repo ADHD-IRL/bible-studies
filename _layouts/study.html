@@ -1,0 +1,74 @@
+---
+layout: default
+---
+{% assign sorted = site.studies | sort: "title" %}
+<article class="study">
+  <header class="study-hero">
+    <div class="wrap narrow">
+      <a class="back" href="{{ '/studies/' | relative_url }}">&larr; All studies</a>
+      <span class="pill">{{ page.type }}</span>
+      <h1>{{ page.title }}</h1>
+      {% if page.summary %}<p class="lede">{{ page.summary }}</p>{% endif %}
+      <div class="study-facts">
+        {% if page.date %}<span>{{ page.date | date: "%B %-d, %Y" }}</span>{% endif %}
+        {% if page.testament %}<span>{% if page.testament == "Both" %}Old and New Testament{% else %}{{ page.testament }} Testament{% endif %}</span>{% endif %}
+        <span>{{ content | number_of_words | divided_by: 220 | plus: 1 }} min read</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="wrap narrow study-grid">
+    <aside class="study-side">
+      {% if page.references.size > 0 %}
+      <section>
+        <h2 class="side-h">Scripture</h2>
+        <div class="refs">{% for r in page.references %}{% include ref-link.html ref=r %}{% endfor %}</div>
+      </section>
+      {% endif %}
+      {% if page.books.size > 0 %}
+      <section>
+        <h2 class="side-h">Books</h2>
+        <div class="tags">{% for b in page.books %}<a class="tag" href="{{ '/books/' | relative_url }}#{{ b | slugify }}">{{ b }}</a>{% endfor %}</div>
+      </section>
+      {% endif %}
+      {% if page.topics.size > 0 %}
+      <section>
+        <h2 class="side-h">Topics</h2>
+        <div class="tags">{% for t in page.topics %}<a class="tag tag-topic" href="{{ '/topics/' | relative_url }}#{{ t | slugify }}">{{ t }}</a>{% endfor %}</div>
+      </section>
+      {% endif %}
+    </aside>
+
+    <div class="prose">
+      {{ content }}
+    </div>
+  </div>
+
+  {% assign related = "" | split: "" %}
+  {% for s in site.studies %}
+    {% if s.url != page.url %}
+      {% assign hit = false %}
+      {% for t in s.topics %}{% if page.topics contains t %}{% assign hit = true %}{% endif %}{% endfor %}
+      {% for b in s.books %}{% if page.books.first == b %}{% assign hit = true %}{% endif %}{% endfor %}
+      {% if hit %}{% assign related = related | push: s %}{% endif %}
+    {% endif %}
+  {% endfor %}
+  {% if related.size > 0 %}
+  <section class="wrap related">
+    <h2 class="section-h">Keep studying</h2>
+    <div class="cards">
+      {% for s in related limit: 3 %}{% include study-card.html study=s %}{% endfor %}
+    </div>
+  </section>
+  {% endif %}
+
+  <nav class="wrap narrow prev-next">
+    {% for s in sorted %}{% if s.url == page.url %}
+      {% assign i = forloop.index0 %}
+      {% assign prev_i = i | minus: 1 %}
+      {% assign next_i = i | plus: 1 %}
+      {% if i > 0 %}<a class="pn prev" href="{{ sorted[prev_i].url | relative_url }}"><small>Previous</small>{{ sorted[prev_i].title }}</a>{% else %}<span></span>{% endif %}
+      {% if sorted[next_i] %}<a class="pn next" href="{{ sorted[next_i].url | relative_url }}"><small>Next</small>{{ sorted[next_i].title }}</a>{% endif %}
+    {% endif %}{% endfor %}
+  </nav>
+</article>

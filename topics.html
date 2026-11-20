@@ -1,0 +1,33 @@
+---
+layout: default
+title: Topics
+permalink: /topics/
+---
+{% capture raw %}{% for s in site.studies %}{% for t in s.topics %}{{ t }}|{% endfor %}{% endfor %}{% endcapture %}
+{% assign topics = raw | split: "|" | uniq | sort_natural %}
+<section class="page-head">
+  <div class="wrap">
+    <h1>Browse by topic</h1>
+    <p>{{ topics | size }} themes across the library. Type to narrow the list.</p>
+    <input class="topic-filter" id="topic-filter" type="search" placeholder="Filter topics" aria-label="Filter topics">
+  </div>
+</section>
+<section class="wrap">
+  <div class="topic-cloud" id="topic-cloud">
+    {% for t in topics %}
+      {% assign n = 0 %}{% for s in site.studies %}{% if s.topics contains t %}{% assign n = n | plus: 1 %}{% endif %}{% endfor %}
+      <a class="topic" href="#{{ t | slugify }}" data-name="{{ t | downcase }}" style="--w: {% if n > 6 %}6{% else %}{{ n }}{% endif %}">{{ t }} <span>{{ n }}</span></a>
+    {% endfor %}
+  </div>
+  <div class="topic-groups">
+  {% for t in topics %}
+    {% assign list = site.studies | where_exp: "s", "s.topics contains t" | sort: "title" %}
+    <div class="group" id="{{ t | slugify }}" data-name="{{ t | downcase }}">
+      <h3 class="group-h">{{ t }} <span>{{ list.size }}</span></h3>
+      <ul class="list">
+        {% for s in list %}<li><a href="{{ s.url | relative_url }}">{{ s.title }}</a><small>{{ s.type }}</small></li>{% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+  </div>
+</section>

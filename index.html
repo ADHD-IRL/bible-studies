@@ -1,0 +1,61 @@
+---
+layout: default
+title: Home
+---
+{% assign total = site.studies | size %}
+{% assign recent = site.studies | where_exp: "s", "s.date" | sort: "date" | reverse %}
+{% assign types = site.studies | group_by: "type" | sort: "name" %}
+{% capture all_books %}{% for s in site.studies %}{% for b in s.books %}{{ b }}|{% endfor %}{% endfor %}{% endcapture %}
+{% assign book_count = all_books | split: "|" | uniq | size %}
+{% capture all_topics %}{% for s in site.studies %}{% for t in s.topics %}{{ t }}|{% endfor %}{% endfor %}{% endcapture %}
+{% assign topic_count = all_topics | split: "|" | uniq | size %}
+
+<section class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Psalm 119:105</p>
+    <h1>Your word is a lamp to my feet<br><em>and a light to my path.</em></h1>
+    <p class="hero-sub">{{ site.tagline }}.</p>
+    <form class="hero-search" action="{{ '/search/' | relative_url }}" method="get" role="search">
+      <input type="search" name="q" placeholder="Search a verse, book or topic" aria-label="Search studies">
+      <button type="submit">Search</button>
+    </form>
+    <div class="stats">
+      <a href="{{ '/studies/' | relative_url }}"><strong>{{ total }}</strong><span>studies</span></a>
+      <a href="{{ '/books/' | relative_url }}"><strong>{{ book_count }}</strong><span>books</span></a>
+      <a href="{{ '/topics/' | relative_url }}"><strong>{{ topic_count }}</strong><span>topics</span></a>
+    </div>
+    <button class="btn-ghost" id="random-study" type="button">Open a random study</button>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2 class="section-h">Latest studies</h2>
+  <div class="cards">
+    {% for s in recent limit: 6 %}{% include study-card.html study=s %}{% endfor %}
+  </div>
+  <p class="more"><a href="{{ '/studies/' | relative_url }}">See the whole library &rarr;</a></p>
+</section>
+
+<section class="wrap">
+  <h2 class="section-h">Browse by kind of study</h2>
+  <div class="type-grid">
+    {% for g in types %}
+    <a class="type-tile" href="{{ '/studies/' | relative_url }}?type={{ g.name | url_encode }}">
+      <strong>{{ g.name }}</strong><span>{{ g.items | size }} {% if g.items.size == 1 %}study{% else %}studies{% endif %}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="wrap testaments">
+  <a class="testament ot" href="{{ '/books/' | relative_url }}#old-testament">
+    <span>Old Testament</span><small>Genesis to Malachi</small>
+  </a>
+  <a class="testament nt" href="{{ '/books/' | relative_url }}#new-testament">
+    <span>New Testament</span><small>Matthew to Revelation</small>
+  </a>
+</section>
+
+<script>
+  window.STUDY_URLS = [{% for s in site.studies %}"{{ s.url | relative_url }}"{% unless forloop.last %},{% endunless %}{% endfor %}];
+</script>
