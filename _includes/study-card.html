@@ -2,6 +2,7 @@
 <a class="card" href="{{ s.url | relative_url }}" data-type="{{ s.type }}" data-testament="{{ s.testament }}">
   <span class="card-type">{{ s.type }}</span>
   <h3 class="card-title">{{ s.title }}</h3>
+  {% if s.passage %}<span class="card-passage">{{ s.passage }}</span>{% endif %}
   {% if s.summary %}<p class="card-summary">{{ s.summary }}</p>{% endif %}
   <span class="card-meta">
     {% if s.books.size > 0 %}{{ s.books | slice: 0, 3 | join: " · " }}{% endif %}

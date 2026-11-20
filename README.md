@@ -14,6 +14,7 @@ A library of Mark's Bible studies, built with Jekyll for GitHub Pages. You can b
 | Field | What it holds |
 |---|---|
 | `title` | The study's title |
+| `passage` | Optional. The main verse or chapter, shown under the title, for example `Romans 8:28` |
 | `date` | Date written, as YYYY-MM-DD (optional) |
 | `type` | One of: Verse Study, Topical Study, Group Lesson, Word Study, Prophecy & End Times, Book Overview, Leader Guide |
 | `books` | Books of the Bible it draws on, spelled as in `_data/books.yml` (for example "Psalms", "1 Corinthians") |

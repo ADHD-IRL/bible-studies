@@ -25,7 +25,7 @@ permalink: /books/
     <div class="group" id="{{ b.name | slugify }}">
       <h3 class="group-h">{{ b.name }} <span>{{ list.size }}</span></h3>
       <ul class="list">
-        {% for s in list %}<li><a href="{{ s.url | relative_url }}">{{ s.title }}</a><small>{{ s.type }}</small></li>{% endfor %}
+        {% for s in list %}<li><a href="{{ s.url | relative_url }}">{{ s.title }}</a><small>{% if s.passage %}{{ s.passage }} · {% endif %}{{ s.type }}</small></li>{% endfor %}
       </ul>
     </div>
     {% endif %}

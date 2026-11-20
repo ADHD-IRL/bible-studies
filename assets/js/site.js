@@ -119,7 +119,7 @@
       var terms = q.split(' ').filter(Boolean);
       var hits = [];
       data.forEach(function (d) {
-        var title = norm(d.t), refs = norm((d.r || []).join(' | ')), books = norm((d.b || []).join(' | ')),
+        var title = norm(d.t + ' ' + (d.p || '')), refs = norm((d.r || []).join(' | ')), books = norm((d.b || []).join(' | ')),
             topics = norm((d.k || []).join(' | ')), sum = norm(d.s), body = norm(d.c), type = norm(d.y);
         var score = 0, all = true;
         if (refs.indexOf(q) > -1) score += 40;
@@ -145,6 +145,7 @@
         return '<a class="result" href="' + esc(d.u) + '">' +
           '<span class="card-type">' + esc(d.y) + '</span>' +
           '<h3>' + mark(d.t, terms) + '</h3>' +
+          (d.p ? '<p class="card-passage">' + mark(d.p, terms) + '</p>' : '') +
           '<p>' + mark(d.s || '', terms) + '</p>' +
           (snip ? '<p>' + mark(snip, terms) + '</p>' : '') +
           '<p><small>' + esc((d.b || []).slice(0, 4).join(' · ')) + (d.d ? '  ·  ' + esc(d.d) : '') + '</small></p>' +

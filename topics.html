@@ -25,7 +25,7 @@ permalink: /topics/
     <div class="group" id="{{ t | slugify }}" data-name="{{ t | downcase }}">
       <h3 class="group-h">{{ t }} <span>{{ list.size }}</span></h3>
       <ul class="list">
-        {% for s in list %}<li><a href="{{ s.url | relative_url }}">{{ s.title }}</a><small>{{ s.type }}</small></li>{% endfor %}
+        {% for s in list %}<li><a href="{{ s.url | relative_url }}">{{ s.title }}</a><small>{% if s.passage %}{{ s.passage }} · {% endif %}{{ s.type }}</small></li>{% endfor %}
       </ul>
     </div>
   {% endfor %}

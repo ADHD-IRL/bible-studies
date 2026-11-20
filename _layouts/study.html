@@ -8,6 +8,7 @@ layout: default
       <a class="back" href="{{ '/studies/' | relative_url }}">&larr; All studies</a>
       <span class="pill">{{ page.type }}</span>
       <h1>{{ page.title }}</h1>
+      {% if page.passage %}<p class="passage">{{ page.passage }}</p>{% endif %}
       {% if page.summary %}<p class="lede">{{ page.summary }}</p>{% endif %}
       <div class="study-facts">
         {% assign _ts = site.time | date: "%s" %}{% assign _ds = page.date | date: "%s" %}{% if _ds != _ts %}<span>{{ page.date | date: "%B %-d, %Y" }}</span>{% endif %}

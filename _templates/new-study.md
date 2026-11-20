@@ -1,5 +1,6 @@
 ---
-title: "Romans 8:28"
+title: "All Things for Good"
+passage: "Romans 8:28"
 date: 2026-11-20
 type: "Verse Study"
 books: ["Romans"]

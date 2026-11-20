@@ -1,5 +1,6 @@
 ---
-title: "Deuteronomy 7:4"
+title: "Guarding Against Idolatry"
+passage: "Deuteronomy 7:4"
 date: 2026-10-05
 type: "Verse Study"
 books: ["Deuteronomy", "Exodus", "Joshua", "2 Corinthians", "Judges"]
